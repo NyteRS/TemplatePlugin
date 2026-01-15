@@ -1,667 +1,371 @@
-# Hytale Server Plugin API Documentation
+# Hytale Plugin Template
 
-## Languages
-[Türkçe (Turkish)](README_TR.md)
+A minimal, ready-to-use template for creating Hytale plugins with modern build tools and automated testing.
 
+> **✨ Builds immediately without any changes!** Clone and run `./gradlew shadowJar` to get a working plugin JAR.
 
-This documentation is auto-generated from the decompiled source code.
+## Features
 
-## AssetEditor
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.asseteditor.AssetEditorPlugin`
-
-_No public methods found or file parse error._
+✅ **Modern Build System** - Gradle with Kotlin DSL  
+✅ **Automated Testing** - Custom Gradle plugin for one-command server testing  
+✅ **Java 25** - Latest Java features  
+✅ **ShadowJar** - Automatic dependency bundling  
+✅ **CI/CD Ready** - GitHub Actions workflow included  
+✅ **Minimal Structure** - Only essential files, write your own code  
 
 ---
 
-## BlockSpawner
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.blockspawner.BlockSpawnerPlugin`
+## Quick Start
 
-### Public Methods
-```java
-public static BlockSpawnerPlugin get();
-public Query<ChunkStore> getQuery();
-public void onEntityAdded(@Nonnull Ref<ChunkStore> ref, @Nonnull AddReason reason, @Nonnull Store<ChunkStore> store, @Nonnull CommandBuffer<ChunkStore> commandBuffer);
-public void onEntityRemove(@Nonnull Ref<ChunkStore> ref, @Nonnull RemoveReason reason, @Nonnull Store<ChunkStore> store, @Nonnull CommandBuffer<ChunkStore> commandBuffer);
-public void onEntityAdd(@Nonnull Holder<ChunkStore> holder, @Nonnull AddReason reason, @Nonnull Store<ChunkStore> store);
-public void onEntityRemoved(@Nonnull Holder<ChunkStore> holder, @Nonnull RemoveReason reason, @Nonnull Store<ChunkStore> store);
-public Query<ChunkStore> getQuery();
+### Prerequisites
+
+- **Java 25 JDK** - [Download here](https://www.oracle.com/java/technologies/downloads/)
+- **IntelliJ IDEA** - [Download here](https://www.jetbrains.com/idea/download/) (Community Edition is fine)
+- **Git** - [Download here](https://git-scm.com/)
+
+### 1. Clone or Download
+
+```bash
+git clone https://github.com/yourusername/hytale-plugin-template.git
+cd hytale-plugin-template
+```
+
+**The template builds immediately without any changes!**  
+You can customize it later when you're ready to develop your plugin.
+
+### 2. Build Immediately (No Changes Needed!)
+
+The template works out-of-the-box:
+
+```bash
+# Windows
+gradlew.bat shadowJar
+
+# Linux/Mac
+./gradlew shadowJar
+```
+
+Your plugin JAR will be in: `build/libs/TemplatePlugin-1.0.0.jar`
+
+### 3. Customize Your Plugin (Optional)
+
+When ready to customize, edit these files:
+
+**`settings.gradle.kts`:**
+```kotlin
+rootProject.name = "your-plugin-name"
+```
+
+**`gradle.properties`:**
+```properties
+pluginGroup=com.yourname
+pluginVersion=1.0.0
+pluginDescription=Your plugin description
+```
+
+**`src/main/resources/manifest.json`:**
+```json
+{
+  "Group": "YourName",
+  "Name": "YourPluginName",
+  "Main": "com.yourname.yourplugin.YourPlugin"
+}
+```
+
+**Rename the main plugin class:**
+- Rename `src/main/java/com/example/templateplugin/TemplatePlugin.java`
+- Update package name to match your `pluginGroup`
+
+### 4. Build Your Plugin
+
+```bash
+# Windows
+gradlew.bat shadowJar
+
+# Linux/Mac
+./gradlew shadowJar
+```
+
+Your plugin JAR will be in: `build/libs/YourPluginName-1.0.0.jar`
+
+### 5. Implement Your Plugin
+
+Write your plugin code in `src/main/java/`:
+- Commands
+- Event listeners
+- Services
+- Storage
+- Utilities
+
+See our [documentation](../Documentation/) for examples and patterns.
+
+### 6. Test Your Plugin (Automated!)
+
+```bash
+# Windows
+gradlew.bat runServer
+
+# Linux/Mac
+./gradlew runServer
+```
+
+This will:
+1. Download the Hytale server (cached for future runs)
+2. Build your plugin
+3. Copy it to the server's plugins folder
+4. Start the server with interactive console
+
+---
+
+## Project Structure
+
+```
+TemplatePlugin/
+├── .github/workflows/
+│   └── build.yml                    # CI/CD workflow
+├── buildSrc/
+│   ├── build.gradle.kts             # Custom plugin configuration
+│   └── src/main/kotlin/
+│       └── RunHytalePlugin.kt       # Automated server testing
+├── src/main/
+│   ├── java/com/example/templateplugin/
+│   │   └── TemplatePlugin.java      # Minimal main class (example)
+│   └── resources/
+│       └── manifest.json            # Plugin metadata
+├── .gitignore                       # Git ignore rules
+├── build.gradle.kts                 # Build configuration
+├── gradle.properties                # Project properties
+├── settings.gradle.kts              # Project settings
+├── LICENSE                          # MIT License
+└── README.md                        # This file
+```
+
+**Note:** This is a minimal template. Create your own folder structure:
+- `commands/` - For command implementations
+- `listeners/` - For event listeners
+- `services/` - For business logic
+- `storage/` - For data persistence
+- `utils/` - For utility classes
+- `config/` - For configuration management
+
+---
+
+## Development Workflow
+
+### Building
+
+```bash
+# Compile only
+./gradlew compileJava
+
+# Build plugin JAR
+./gradlew shadowJar
+
+# Clean and rebuild
+./gradlew clean shadowJar
+```
+
+### Testing
+
+```bash
+# Run server with your plugin
+./gradlew runServer
+
+# Run unit tests
+./gradlew test
+
+# Clean test server
+rm -rf run/
+```
+
+### Debugging
+
+```bash
+# Run server in debug mode
+./gradlew runServer -Pdebug
+
+# Then connect your IDE debugger to localhost:5005
 ```
 
 ---
 
-## BlockTick
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.blocktick.BlockTickPlugin`
+## Customization
 
-### Public Methods
-```java
-public static BlockTickPlugin get();
-public TickProcedure getTickProcedure(int blockId);
-public int discoverTickingBlocks(@Nonnull Holder<ChunkStore> holder, @Nonnull WorldChunk chunk);
+### Adding Dependencies
+
+Edit `build.gradle.kts`:
+
+```kotlin
+dependencies {
+    // Hytale API (provided by server)
+    compileOnly(files("libs/hytale-server.jar"))
+    
+    // Your dependencies (will be bundled)
+    implementation("com.google.code.gson:gson:2.10.1")
+    
+    // Test dependencies
+    testImplementation("org.junit.jupiter:junit-jupiter:5.10.0")
+}
 ```
 
----
+### Configuring Server Testing
 
-## BlockPhysics
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.blockphysics.BlockPhysicsPlugin`
+**Run Hytale Server** - A Gradle plugin to download and run a Hytale server for development and testing purposes. The server files will be located in the `run/` directory of the project. Before starting the server it will compile (shadowJar task) and copy the plugin jar to the server's `plugins/` folder.
 
-### Public Methods
-```java
-public static void validatePrefabs(@Nonnull LoadAssetEvent event);
+**Usage:**
+
+Edit `build.gradle.kts`:
+
+```kotlin
+runHytale {
+    jarUrl = "url to hytale server jar"
+}
 ```
 
----
+Run the server with:
 
-## BuilderTools
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.buildertools.BuilderToolsPlugin`
+```bash
+# Windows
+gradlew.bat runServer
 
-_No public methods found or file parse error._
-
----
-
-## Crafting
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.crafting.CraftingPlugin`
-
-### Description
-Manages the crafting system, including recipes, crafting benches (stations), and player unlocked recipes.
-It handles checking if a player has the required materials and if a specific recipe is valid for a given bench.
-
-### Public Methods
-```java
-// Returns the singleton instance
-public static CraftingPlugin get();
-
-// Gets all available recipe IDs for a specific bench ID and category.
-public static Set<String> getAvailableRecipesForCategory(String benchId, String benchCategoryId);
-
-// Checks if an item stack can be used as a material in the current state of a bench.
-public static boolean isValidCraftingMaterialForBench(BenchState benchState, ItemStack itemStack);
-
-// Checks if an item is valid for upgrading a bench.
-public static boolean isValidUpgradeMaterialForBench(BenchState benchState, ItemStack itemStack);
-
-// Gets a list of all recipes available for a given Bench block.
-public static List<CraftingRecipe> getBenchRecipes(@Nonnull Bench bench);
-
-// Gets recipes for a bench type (e.g. Crafting, Diagram, Structural) and name.
-public static List<CraftingRecipe> getBenchRecipes(BenchType benchType, String name);
-
-// Unlocks a recipe for a player ("learns" it). Returns true if it was newly learned.
-// Requires the specific player Entity Reference.
-public static boolean learnRecipe(@Nonnull Ref<EntityStore> ref, @Nonnull String recipeId, @Nonnull ComponentAccessor<EntityStore> componentAccessor);
-
-// Locks a recipe for a player ("forgets" it).
-public static boolean forgetRecipe(@Nonnull Ref<EntityStore> ref, @Nonnull String itemId, @Nonnull ComponentAccessor<EntityStore> componentAccessor);
-
-// Sends a packet to the client syncing their list of known recipes.
-public static void sendKnownRecipes(@Nonnull Ref<EntityStore> ref, @Nonnull ComponentAccessor<EntityStore> componentAccessor);
+# Linux/Mac
+./gradlew runServer
 ```
 
----
+**Features:**
+- ✅ Automatic server JAR download and caching
+- ✅ Compiles and deploys your plugin automatically
+- ✅ Starts server with interactive console
+- ✅ One-command workflow: `./gradlew runServer`
+- ✅ Server files in `run/` directory (gitignored)
 
-## CommandMacro
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.commandmacro.MacroCommandPlugin`
+### Implementing Your Plugin
 
-### Public Methods
-```java
-public static MacroCommandPlugin get();
-public void loadCommandMacroAsset(@Nonnull LoadedAssetsEvent<String, MacroCommandBuilder, DefaultAssetMap<String, MacroCommandBuilder>> event);
+**Recommended folder structure:**
+```
+src/main/java/com/yourname/yourplugin/
+├── YourPlugin.java          # Main class
+├── commands/                # Commands
+├── listeners/               # Event listeners
+├── services/                # Business logic
+├── storage/                 # Data persistence
+├── config/                  # Configuration
+└── utils/                   # Utilities
 ```
 
----
-
-## Instances
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.instances.InstancesPlugin`
-
-_No public methods found or file parse error._
+**See our documentation for examples:**
+- [Getting Started with Plugins](../Documentation/07-getting-started-with-plugins.md)
+- [Advanced Plugin Patterns](../Documentation/12-advanced-plugin-patterns.md)
+- [Common Plugin Features](../Documentation/14-common-plugin-features.md)
 
 ---
 
-## LANDiscovery
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.landiscovery.LANDiscoveryPlugin`
+## CI/CD
 
-### Public Methods
-```java
-public static LANDiscoveryPlugin get();
-public void setLANDiscoveryEnabled(boolean enabled);
-public boolean isLANDiscoveryEnabled();
-public LANDiscoveryThread getLanDiscoveryThread();
+This template includes a GitHub Actions workflow that:
+
+1. ✅ Builds your plugin on every push
+2. ✅ Runs tests
+3. ✅ Uploads artifacts
+4. ✅ Creates releases (when you tag)
+
+### Creating a Release
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
 ```
 
+GitHub Actions will automatically build and create a release with your plugin JAR.
+
 ---
 
-## NPC
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.server.npc.NPCPlugin`
+## Best Practices
 
-### Description
-The NPC System is one of the most complex systems in Hytale Server. It manages the lifecycle, AI, behavior, and data of all Non-Player Characters.
-It uses a "Builder" pattern to construct NPCs from assets and registers various AI components like Sensors (eyes/ears), Actions (attacks/movements), and Motions.
-It also interacts heavily with the `EntityStore` to manage components like `Blackboard` (memory), `CombatData`, and `Timers`.
+### ✅ DO:
 
-### Public Methods
-```java
-// Returns the singleton instance of the NPCPlugin
-public static NPCPlugin get();
+- Use the Service-Storage pattern for data management
+- Write unit tests for your business logic
+- Use structured logging (not `System.out.println`)
+- Handle errors gracefully
+- Document your public API
+- Version your releases semantically (1.0.0, 1.1.0, etc.)
 
-// Spawns an NPC of a specific type (role) at a location.
-// Returns a Pair containing the Entity reference and the NPC component.
-public Pair<Ref<EntityStore>, INonPlayerCharacter> spawnNPC(@Nonnull Store<EntityStore> store, @Nonnull String npcType, @Nullable String groupType, @Nonnull Vector3d position, @Nonnull Vector3f rotation);
+### ❌ DON'T:
 
-// Reloads all active NPCs that share a specific role index. Useful for live-updating AI behavior.
-public static void reloadNPCsWithRole(int roleIndex);
+- Hardcode configuration values
+- Block the main thread with heavy operations
+- Ignore exceptions
+- Use deprecated APIs
+- Commit sensitive data (API keys, passwords)
 
-// Gets the manager responsible for NPC blueprints/templates.
-public BuilderManager getBuilderManager();
+---
 
-// Gets the map of attitudes (Friendly, Hostile, Neutral) between different factions/groups.
-public AttitudeMap getAttitudeMap();
+## Troubleshooting
 
-// Gets the map determining how NPCs react to specific items (e.g. holding a weapon vs a flower).
-public ItemAttitudeMap getItemAttitudeMap();
+### Build Fails
 
-// Determines if a specific role name (e.g. "kweebec_guard") exists.
-public boolean hasRoleName(String roleName);
-
-// Registers all the core AI factories (Actions, Sensors, Motions). Internal use mostly but good to know.
-public void setupNPCLoading();
-
-// Gets the human-readable name of a builder index.
-public String getName(int builderIndex);
-
-// Benchmarking methods for performance testing AI roles.
-public boolean startRoleBenchmark(double seconds, @Nonnull Consumer<Int2ObjectMap<TimeDistributionRecorder>> onFinished);
+```bash
+# Clean and rebuild
+./gradlew clean build --refresh-dependencies
 ```
 
----
+### Server Won't Start
 
-## NPCObjectives
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.adventure.npcobjectives.NPCObjectivesPlugin`
+1. Check that `jarUrl` in `build.gradle.kts` is correct
+2. Verify Java 25 is installed: `java -version`
+3. Check logs in `run/logs/`
 
-### Public Methods
-```java
-public static NPCObjectivesPlugin get();
-public static boolean hasTask(@Nonnull UUID playerUUID, @Nonnull UUID npcId, @Nonnull String taskId);
-public static String updateTaskCompletion(@Nonnull Store<EntityStore> store, @Nonnull Ref<EntityStore> ref, @Nonnull PlayerRef playerRef, @Nonnull UUID npcId, @Nonnull String taskId);
-public static void startObjective(@Nonnull Ref<EntityStore> playerReference, @Nonnull String taskId, @Nonnull Store<EntityStore> store);
-```
+### Plugin Not Loading
+
+1. Verify `manifest.json` has correct `Main` class
+2. Check server logs for errors
+3. Ensure all dependencies are bundled in JAR
 
 ---
 
-## ObjectiveReputation
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.adventure.objectivereputation.ObjectiveReputationPlugin`
+## Documentation
 
-### Public Methods
-```java
-public static ObjectiveReputationPlugin get();
-```
+For detailed guides on plugin development, see:
 
----
-
-## Objectives
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.adventure.objectives.ObjectivePlugin`
-
-### Description
-Handles the questing and objective system. Requires `Objectives` plugin.
-Manages "Objective Lines" (quest chains) and individual "Objectives".
-Tracks progress for players, handles task completion (e.g. "Gather Wood", "Kill skeletons"), and rewards.
-
-### Public Methods
-```java
-// Returns the singleton instance
-public static ObjectivePlugin get();
-
-// Starts a specific objective for one or more players.
-// If markerUUID is provided, it might show a location marker.
-public Objective startObjective(@Nonnull String objectiveId, @Nonnull Set<UUID> playerUUIDs, @Nonnull UUID worldUUID, @Nullable UUID markerUUID, @Nonnull Store<EntityStore> store);
-
-// Starts a whole chain of objectives (Objective Line).
-public Objective startObjectiveLine(@Nonnull Store<EntityStore> store, @Nonnull String objectiveLineId, @Nonnull Set<UUID> playerUUIDs, @Nonnull UUID worldUUID, @Nullable UUID markerUUID);
-
-// Checks if a player is allowed to start an objective (e.g. if they are not already doing it).
-public boolean canPlayerDoObjective(@Nonnull Player player, @Nonnull String objectiveAssetId);
-
-// Checks if a player can start an objective line.
-public boolean canPlayerDoObjectiveLine(@Nonnull Player player, @Nonnull String objectiveLineId);
-
-// Marks an objective as completed for the associated players and handles rewards/next steps.
-public void objectiveCompleted(@Nonnull Objective objective, @Nonnull Store<EntityStore> store);
-
-// Cancels an active objective.
-public void cancelObjective(@Nonnull UUID objectiveUUID, @Nonnull Store<EntityStore> store);
-
-// Adds a player to an already running objective instance (co-op quests).
-public void addPlayerToExistingObjective(@Nonnull Store<EntityStore> store, @Nonnull UUID playerUUID, @Nonnull UUID objectiveUUID);
-
-// Removes a player from an objective.
-public void removePlayerFromExistingObjective(@Nonnull Store<EntityStore> store, @Nonnull UUID playerUUID, @Nonnull UUID objectiveUUID);
-
-// Stops tracking an objective for a specific player (client side update).
-public void untrackObjectiveForPlayer(@Nonnull Objective objective, @Nonnull UUID playerUUID);
-
-// Returns a debug dump of current objective data.
-public String getObjectiveDataDump();
-```
+- [Hytale Modding Documentation](https://github.com/yourusername/hytale-modding/tree/main/Documentation)
+- [Getting Started with Plugins](../Documentation/07-getting-started-with-plugins.md)
+- [Advanced Plugin Patterns](../Documentation/12-advanced-plugin-patterns.md)
+- [Common Plugin Features](../Documentation/14-common-plugin-features.md)
 
 ---
 
-## ObjectiveShop
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.adventure.objectiveshop.ObjectiveShopPlugin`
+## Contributing
 
-### Public Methods
-```java
-public static ObjectiveShopPlugin get();
-```
+Contributions are welcome! Please:
 
----
-
-## Path
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.path.PathPlugin`
-
-_No public methods found or file parse error._
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Submit a pull request
 
 ---
 
-## Reputation
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.adventure.reputation.ReputationPlugin`
+## License
 
-### Public Methods
-```java
-public static ReputationPlugin get();
-public int changeReputation(@Nonnull Player player, @Nonnull Ref<EntityStore> npcRef, int value, @Nonnull ComponentAccessor<EntityStore> componentAccessor);
-public int changeReputation(@Nonnull Player player, @Nonnull String reputationGroupId, int value, @Nonnull ComponentAccessor<EntityStore> componentAccessor);
-public int changeReputation(@Nonnull World world, @Nonnull String reputationGroupId, int value);
-public int getReputationValue(@Nonnull Store<EntityStore> store, @Nonnull Ref<EntityStore> playerEntityRef, @Nonnull Ref<EntityStore> npcEntityRef);
-public int getReputationValue(@Nonnull Store<EntityStore> store, @Nonnull Ref<EntityStore> playerEntityRef, @Nonnull String reputationGroupId);
-public int getReputationValue(@Nonnull Store<EntityStore> store, @Nonnull Ref<EntityStore> npcRef);
-public int getReputationValue(@Nonnull Store<EntityStore> store, String reputationGroupId);
-public ReputationRank getReputationRank(@Nonnull Store<EntityStore> store, @Nonnull Ref<EntityStore> ref, @Nonnull Ref<EntityStore> npcRef);
-public ReputationRank getReputationRank(@Nonnull Store<EntityStore> store, @Nonnull Ref<EntityStore> ref, @Nonnull String reputationGroupId);
-public ReputationRank getReputationRankFromValue(int value);
-public ReputationRank getReputationRank(@Nonnull Store<EntityStore> store, @Nonnull Ref<EntityStore> npcRef);
-public Attitude getAttitude(@Nonnull Store<EntityStore> store, @Nonnull Ref<EntityStore> ref, @Nonnull Ref<EntityStore> npc);
-public Attitude getAttitude(@Nonnull Store<EntityStore> store, @Nonnull Ref<EntityStore> npcRef);
-```
+This template is released under the MIT License. You are free to use it for any purpose.
 
 ---
 
-## NPCReputation
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.adventure.npcreputation.NPCReputationPlugin`
+## Support
 
-_No public methods found or file parse error._
-
----
-
-## Shop
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.adventure.shop.ShopPlugin`
-
-### Public Methods
-```java
-public static ShopPlugin get();
-```
+- **Issues:** [GitHub Issues](https://github.com/yourusername/hytale-plugin-template/issues)
+- **Documentation:** [Hytale Modding Docs](https://github.com/yourusername/hytale-modding)
+- **Community:** Join the Hytale modding community
 
 ---
 
-## ShopReputation
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.adventure.shopreputation.ShopReputationPlugin`
+## Credits
 
-_No public methods found or file parse error._
+Created by the Hytale modding community.
 
----
-
-## NPCShop
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.adventure.npcshop.NPCShopPlugin`
-
-_No public methods found or file parse error._
+Based on best practices from production Hytale plugins.
 
 ---
 
-## NPCEditor
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.npceditor.NPCEditorPlugin`
-
-_No public methods found or file parse error._
-
----
-
-## Stash
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.adventure.stash.StashPlugin`
-
-### Public Methods
-```java
-public static ListTransaction<ItemStackTransaction> stash(@Nonnull ItemContainerState containerState, boolean clearDropList);
-public Query<ChunkStore> getQuery();
-public void onEntityAdded(@Nonnull Ref<ChunkStore> ref, @Nonnull AddReason reason, @Nonnull Store<ChunkStore> store, @Nonnull CommandBuffer<ChunkStore> commandBuffer);
-public void onEntityRemove(@Nonnull Ref<ChunkStore> ref, @Nonnull RemoveReason reason, @Nonnull Store<ChunkStore> store, @Nonnull CommandBuffer<ChunkStore> commandBuffer);
-public Set<Dependency<ChunkStore>> getDependencies();
-```
-
----
-
-## TagSet
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.tagset.TagSetPlugin`
-
-### Public Methods
-```java
-public static TagSetPlugin get();
-public boolean tagInSet(int tagSet, int tagIndex);
-public IntSet getSet(int tagSet);
-```
-
----
-
-## Teleport
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.teleport.TeleportPlugin`
-
-### Description
-Manages "Warps" and teleportation logic.
-Allows creating, saving, and loading named Warp points in the world.
-Used by commands like `/warp` and `/tppos`.
-
-### Public Methods
-```java
-// Returns the singleton instance
-public static TeleportPlugin get();
-
-// Checks if warps have been loaded from disk.
-public boolean isWarpsLoaded();
-
-// Loads warps from `warps.json` or `warps.bson` in the universe directory.
-public void loadWarps();
-
-// Saves current warps to `warps.json`.
-public void saveWarps();
-
-// Creates a Warp entity (marker) in the world.
-public Holder<EntityStore> createWarp(@Nonnull Warp warp, @Nonnull Store<EntityStore> store);
-
-// Returns the map of loaded warps. (Note: Inferred from logic, method name generic in decompiled code usually `getWarps()`)
-public Map<String, Warp> getWarps();
-
-// Updates markers on the map for players within range.
-public void update(@Nonnull World world, @Nonnull GameplayConfig gameplayConfig, @Nonnull WorldMapTracker tracker, int chunkViewRadius, int playerChunkX, int playerChunkZ);
-```
-
----
-
-## Fluid
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.fluid.FluidPlugin`
-
-### Public Methods
-```java
-public static FluidPlugin get();
-public FluidSection getFluidSection(int cx, int cy, int cz);
-public BlockSection getBlockSection(int cx, int cy, int cz);
-public void setBlock(int x, int y, int z, int blockId);
-```
-
----
-
-## Weather
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.weather.WeatherPlugin`
-
-### Public Methods
-```java
-public static WeatherPlugin get();
-```
-
----
-
-## WorldGen
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.worldgen.WorldGenPlugin`
-
-### Public Methods
-```java
-public static WorldGenPlugin get();
-```
-
----
-
-## Farming
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.adventure.farming.FarmingPlugin`
-
-### Public Methods
-```java
-public static FarmingPlugin get();
-```
-
----
-
-## Camera
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.adventure.camera.CameraPlugin`
-
-_No public methods found or file parse error._
-
----
-
-## WorldLocationCondition
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.adventure.worldlocationcondition.WorldLocationConditionPlugin`
-
-_No public methods found or file parse error._
-
----
-
-## NPCCombatActionEvaluator
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.npccombatactionevaluator.NPCCombatActionEvaluatorPlugin`
-
-### Public Methods
-```java
-public static NPCCombatActionEvaluatorPlugin get();
-```
-
----
-
-## Model
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.model.ModelPlugin`
-
-_No public methods found or file parse error._
-
----
-
-## Mantling
-- **Version**: 1.0.0
-- **Description**: Enable mantling
-- **Main Class**: `com.hypixel.hytale.builtin.mantling.MantlingPlugin`
-
-_No public methods found or file parse error._
-
----
-
-## SafetyRoll
-- **Version**: 1.0.0
-- **Description**: Enable Safety Roll
-- **Main Class**: `com.hypixel.hytale.builtin.safetyroll.SafetyRollPlugin`
-
-_No public methods found or file parse error._
-
----
-
-## SprintForce
-- **Version**: 1.0.0
-- **Description**: Enable sprint acceleration/deceleration
-- **Main Class**: `com.hypixel.hytale.builtin.sprintforce.SprintForcePlugin`
-
-_No public methods found or file parse error._
-
----
-
-## CrouchSlide
-- **Version**: 1.0.0
-- **Description**: Enable Crouch Sliding
-- **Main Class**: `com.hypixel.hytale.builtin.crouchslide.CrouchSlidePlugin`
-
-_No public methods found or file parse error._
-
----
-
-## Parkour
-- **Version**: 1.0.0
-- **Description**: Module to add a timer with a checkpoint system
-- **Main Class**: `com.hypixel.hytale.builtin.parkour.ParkourPlugin`
-
-### Public Methods
-```java
-public static ParkourPlugin get();
-public Model getParkourCheckpointModel();
-public Object2IntMap<UUID> getCurrentCheckpointByPlayerMap();
-public Object2LongMap<UUID> getStartTimeByPlayerMap();
-public Int2ObjectMap<UUID> getCheckpointUUIDMap();
-public int getLastIndex();
-public void updateLastIndex(int index);
-public void updateLastIndex();
-public void resetPlayer(UUID playerUuid);
-```
-
----
-
-## Mounts
-- **Version**: 1.0.0
-- **Description**: Module to add mounts
-- **Main Class**: `com.hypixel.hytale.builtin.mounts.MountPlugin`
-
-### Public Methods
-```java
-public static MountPlugin getInstance();
-public static void checkDismountNpc(@Nonnull ComponentAccessor<EntityStore> store, @Nonnull Player playerComponent);
-public static void dismountNpc(@Nonnull ComponentAccessor<EntityStore> store, int mountEntityId);
-public static void resetOriginalPlayerMovementSettings(@Nonnull PlayerRef playerRef, @Nonnull ComponentAccessor<EntityStore> store);
-```
-
----
-
-## HytaleGenerator
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.hytalegenerator.plugin.HytaleGenerator`
-
-### Public Methods
-```java
-public CompletableFuture<GeneratedChunk> submitChunkRequest(@Nonnull ChunkRequest request);
-public NStagedChunkGenerator createStagedChunkGenerator(@Nonnull ChunkRequest.GeneratorProfile generatorProfile, @Nonnull WorldStructureAsset worldStructureAsset, @Nonnull SettingsAsset settingsAsset);
-```
-
----
-
-## Teleporter
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.adventure.teleporter.TeleporterPlugin`
-
-_No public methods found or file parse error._
-
----
-
-## Memories
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.adventure.memories.MemoriesPlugin`
-
-### Public Methods
-```java
-public static MemoriesPlugin get();
-public MemoriesPluginConfig getConfig();
-public int getMemoriesLevel(@Nonnull GameplayConfig gameplayConfig);
-public int getMemoriesForNextLevel(@Nonnull GameplayConfig gameplayConfig);
-public boolean hasRecordedMemory(Memory memory);
-public boolean recordPlayerMemories(@Nonnull PlayerMemories playerMemories);
-public Set<Memory> getRecordedMemories();
-public void clearRecordedMemories();
-public void recordAllMemories();
-public Object2DoubleMap<String> getCollectionRadius();
-public Query<EntityStore> getQuery();
-public Set<Dependency<EntityStore>> getDependencies();
-public void onEntityAdded(@Nonnull Ref<EntityStore> ref, @Nonnull AddReason reason, @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer);
-public void onEntityRemove(@Nonnull Ref<EntityStore> ref, @Nonnull RemoveReason reason, @Nonnull Store<EntityStore> store, @Nonnull CommandBuffer<EntityStore> commandBuffer);
-```
-
----
-
-## Deployables
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.deployables.DeployablesPlugin`
-
-### Public Methods
-```java
-public static DeployablesPlugin get();
-```
-
----
-
-## Portals
-- **Version**: 1.0.0
-- **Description**: Module to add portals
-- **Main Class**: `com.hypixel.hytale.builtin.portals.PortalsPlugin`
-
-### Public Methods
-```java
-public static PortalsPlugin getInstance();
-public int countActiveFragments();
-```
-
----
-
-## Beds
-- **Version**: 1.0.0
-- **Description**: Module to handle beds and sleeping in them
-- **Main Class**: `com.hypixel.hytale.builtin.beds.BedsPlugin`
-
-### Public Methods
-```java
-public static BedsPlugin getInstance();
-```
-
----
-
-## Ambience
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.ambience.AmbiencePlugin`
-
-### Public Methods
-```java
-public static AmbiencePlugin get();
-public Model getAmbientEmitterModel();
-```
-
----
-
-## CreativeHub
-- **Version**: 1.0.0
-- **Main Class**: `com.hypixel.hytale.builtin.creativehub.CreativeHubPlugin`
-
-### Public Methods
-```java
-public static CreativeHubPlugin get();
-public World getOrSpawnHubInstance(@Nonnull World parentWorld, @Nonnull CreativeHubWorldConfig hubConfig, @Nonnull Transform returnPoint);
-public World getActiveHubInstance(@Nonnull World parentWorld);
-public void clearHubInstance(@Nonnull UUID parentWorldUuid);
-public CompletableFuture<World> spawnPermanentWorldFromTemplate(@Nonnull String instanceAssetName, @Nonnull String permanentWorldName);
-```
-
----
-
+**Happy Modding! 🎮**
