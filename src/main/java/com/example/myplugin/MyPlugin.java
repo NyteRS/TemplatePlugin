@@ -5,6 +5,8 @@ import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import javax.annotation.Nonnull;
 import com.example.myplugin.command.HelloCommand;
 
+import com.hypixel.hytale.component.ComponentRegistryProxy;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class MyPlugin extends JavaPlugin {
 
@@ -53,13 +55,17 @@ public class MyPlugin extends JavaPlugin {
     }
 
     private void registerSystems() {
-        // System registration here
+        // Register your lifesteal system so it receives Damage events
+        ComponentRegistryProxy<EntityStore> registry = getEntityStoreRegistry();
+        registry.registerSystem(new LifestealSystems.LifestealOnDamage());
+        System.out.println("[Lifesteal] registered LifestealOnDamage system");
+
+        // Register any other systems here
     }
 
     private void registerCommands() {
         // Adjust this line to match the actual method name you see on `this.`
     }
-
 
     private void registerEvents() {
         // Event registration here
