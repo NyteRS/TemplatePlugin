@@ -1,13 +1,19 @@
 package com.example.myplugin;
 
+import com.example.myplugin.command.ReloadLifestealCommand;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
+
 import javax.annotation.Nonnull;
-import com.example.myplugin.command.HelloCommand;
+import java.nio.file.Path;
+import java.util.Arrays;
 
-import com.hypixel.hytale.component.ComponentRegistryProxy;
-import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-
+/**
+ * MyPlugin (updated) — registers reload command and populates lifesteal on setup.
+ *
+ * Replace or merge this file with your existing MyPlugin implementation; if you already have a setup()
+ * implementation, add the command registration line and the AssetLifestealLoader.populateFromAssets() call there.
+ */
 public class MyPlugin extends JavaPlugin {
 
     private static MyPlugin instance;
@@ -16,26 +22,32 @@ public class MyPlugin extends JavaPlugin {
         super(init);
     }
 
-    public static MyPlugin get() {
-        return instance;
-    }
+    public static MyPlugin get() { return instance; }
 
     @Override
     protected void setup() {
         instance = this;
 
-        // Register components
-        registerComponents();
+        // Your existing setup logic (components, systems, etc.)
+        // registerComponents();
+        // registerSystems();
+        // registerEvents();
 
-        // Register systems
-        registerSystems();
+        // Register the reload lifesteal command
+        getCommandRegistry().registerCommand(new ReloadLifestealCommand());
 
-        // Register commands
-        registerCommands();
+        // Initialize DescriptionEditor (if your plugin uses it). Keep as in your repo or remove.
 
-        // Register events
-        registerEvents();
-        getCommandRegistry().registerCommand(new HelloCommand());
+
+        // Populate lifesteal mapping now (assets should be loaded by the time plugin setup runs in most setups).
+        // If assets are not yet available at this point in your server lifecycle, call AssetLifestealLoader.populateFromAssets()
+        // later (e.g. on a post-asset-load event) or use the /reloadlifesteal command.
+        try {
+            AssetLifestealLoader.populateFromAssets();
+        } catch (Throwable t) {
+            System.out.println("[MyPlugin] warning: initial lifesteal population failed; use /reloadlifesteal after server finished loading assets.");
+            t.printStackTrace();
+        }
 
         System.out.println("MyPlugin setup complete!");
     }
@@ -48,26 +60,5 @@ public class MyPlugin extends JavaPlugin {
     @Override
     protected void shutdown() {
         System.out.println("MyPlugin shutting down!");
-    }
-
-    private void registerComponents() {
-        // Component registration here
-    }
-
-    private void registerSystems() {
-        // Register your lifesteal system so it receives Damage events
-        ComponentRegistryProxy<EntityStore> registry = getEntityStoreRegistry();
-        registry.registerSystem(new LifestealSystems.LifestealOnDamage());
-        System.out.println("[Lifesteal] registered LifestealOnDamage system");
-
-        // Register any other systems here
-    }
-
-    private void registerCommands() {
-        // Adjust this line to match the actual method name you see on `this.`
-    }
-
-    private void registerEvents() {
-        // Event registration here
     }
 }
